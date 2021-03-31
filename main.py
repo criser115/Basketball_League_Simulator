@@ -33,9 +33,11 @@ class Team:
 class Season:
     num_of_seasons = 0
 
+
     def __init__(self, schedule):
 
         self.schedule = schedule
+        
 
     def play_game(self):
         for game in self.schedule:
@@ -47,11 +49,28 @@ class Season:
                     team[1].add_lose()
                     print('{} beat {} {} to {}'.format(team[0].fullname(), team[1].fullname(), team[0].score,
                                                        team[1].score))
-                else:
+                elif team[1].score > team[0].score:
                     team[1].add_win()
                     team[0].add_lose()
                     print('{} beat {} {} to {}'.format(team[1].fullname(), team[0].fullname(), team[1].score,
                                                        team[0].score))
+                else:
+                    while team[0].score == team[1].score:
+                        team[0].score = team[0].score + random.randint(1, 30)
+                        team[1].score = team[1].score + random.randint(1, 30)
+
+                        if team[0].score > team[1].score:
+                            team[0].add_win()
+                            team[1].add_lose()
+                            print('{} beat {} {} to {}'.format(team[0].fullname(), team[1].fullname(), team[0].score,
+                                                               team[1].score))
+                        else:
+                            team[1].add_win()
+                            team[0].add_lose()
+                            print('{} beat {} {} to {}'.format(team[1].fullname(), team[0].fullname(), team[1].score,
+                                                               team[0].score))
+
+                        print("This game went into overtime!!!!!!!!!")
 
     def playoffs(self, teams):
 
@@ -84,6 +103,7 @@ class Season:
                     f"{self.playoff_teams[0].fullname()} beat {self.playoff_teams[1].fullname()} {self.playoff_teams[0].score} to {self.playoff_teams[1].score}")
                 print()
                 print(f"{self.playoff_teams[0].fullname()} ARE THE CHAMPIONS!!!")
+
             else:
                 print(
                     f"{self.playoff_teams[1].fullname()} beat {self.playoff_teams[0].fullname()} {self.playoff_teams[1].score} to {self.playoff_teams[0].score}")
@@ -107,6 +127,7 @@ class Season:
                     f"{self.playoff_teams[0].fullname()} beat {self.playoff_teams[2].fullname()} {self.playoff_teams[0].score} to {self.playoff_teams[2].score}")
                 print()
                 print(f"{self.playoff_teams[0].fullname()} ARE THE CHAMPIONS!!!")
+
             else:
                 print(
                     f"{self.playoff_teams[2].fullname()} beat {self.playoff_teams[0].fullname()} {self.playoff_teams[2].score} to {self.playoff_teams[0].score}")
@@ -130,6 +151,7 @@ class Season:
                     f"{self.playoff_teams[3].fullname()} beat {self.playoff_teams[1].fullname()} {self.playoff_teams[3].score} to {self.playoff_teams[1].score}")
                 print()
                 print(f"{self.playoff_teams[3].fullname()} ARE THE CHAMPIONS!!!")
+
             else:
                 print(
                     f"{self.playoff_teams[1].fullname()} beat {self.playoff_teams[3].fullname()} {self.playoff_teams[1].score} to {self.playoff_teams[3].score}")
@@ -152,6 +174,7 @@ class Season:
                     f"{self.playoff_teams[3].fullname()} beat {self.playoff_teams[2].fullname()} {self.playoff_teams[3].score} to {self.playoff_teams[2].score}")
                 print()
                 print(f"{self.playoff_teams[3].fullname()} ARE THE CHAMPIONS!!!")
+
             else:
                 print(
                     f"{self.playoff_teams[2].fullname()} beat {self.playoff_teams[3].fullname()} {self.playoff_teams[2].score} to {self.playoff_teams[3].score}")
@@ -207,9 +230,14 @@ team_7 = Team('Willowridge', 'Eagles', 0, 0)
 team_8 = Team('Hightower', 'Hurricanes', 0, 0)
 team_9 = Team('Marshall', 'Buffs', 0, 0)
 team_10 = Team('Elkins', 'Knights', 0, 0)
+team_11 = Team('Madison', 'Marlins', 0, 0)
+team_12 = Team('Yates', 'Lions', 0, 0)
+team_13 = Team('Terry', 'Rangers', 0, 0)
+team_14 = Team('Stafford', 'Spartans', 0, 0)
 
 
-teams = [team_1, team_2, team_3, team_4, team_5, team_6, team_7, team_8, team_9, team_10]
+teams = [team_1, team_2, team_3, team_4, team_5, team_6, team_7, team_8, team_9, team_10, team_11, team_12, team_13, team_14]
+random.shuffle(teams)
 schedule_1 = Schedule()
 schedule_1.create_balanced_round_robin(teams)
 
@@ -228,7 +256,11 @@ standings_df = pd.DataFrame(
      [team_7.fullname(), team_7.wins, team_7.loses],
      [team_8.fullname(), team_8.wins, team_8.loses],
      [team_9.fullname(), team_9.wins, team_9.loses],
-     [team_10.fullname(), team_10.wins, team_10.loses]],
+     [team_10.fullname(), team_10.wins, team_10.loses],
+     [team_11.fullname(), team_11.wins, team_11.loses],
+     [team_12.fullname(), team_12.wins, team_12.loses],
+     [team_13.fullname(), team_13.wins, team_13.loses],
+     [team_14.fullname(), team_14.wins, team_14.loses]],
     columns=['Teams', 'Wins', 'Loses']
 )
 
@@ -237,3 +269,6 @@ print(standings_df.sort_values('Wins', ascending=False, ignore_index=True))
 print()
 
 new_season.playoffs(teams)
+
+
+
